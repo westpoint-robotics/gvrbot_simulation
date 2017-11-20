@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+  <name>gvrbot_simulation</name>
+  <version>0.0.0</version>
+  <description>The gvrbot_simulation package</description>
+
+  <maintainer email="user1@todo.todo">user1</maintainer>
+
+  <license>TODO</license>
+
+  <url type="website">https://github.com/westpoint-robotics</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>urdf</run_depend>
+  <run_depend>xacro</run_depend>
+  <run_depend>lms1xx</run_depend>
+  <run_depend>pointgrey_camera_description</run_depend>
+  <run_depend>hector_gazebo_plugins</run_depend>
+  <run_depend>teleop_twist_joy</run_depend>
+
+  <export>
+  </export>
+</package>
