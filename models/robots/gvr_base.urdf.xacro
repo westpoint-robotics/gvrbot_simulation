@@ -1,66 +1,75 @@
 <?xml version="1.0"?>
 
-<robot 
-    xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+<robot name="gvr_bot"
+    xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro"
     xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
     xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
     xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
     
     <xacro:include filename="$(find gvrbot_simulation)/models/robots/inertial_tensors.urdf.xacro" />
     <xacro:include filename="$(find gvrbot_simulation)/models/robots/single_wheel.urdf.xacro" />
-    <xacro:include filename="$(find gvrbot_simulation)/models/robots/basic_colors.urdf.xacro" />
-    <xacro:include filename="$(find gvrbot_simulation)/models/robots/plexiglass_mount.urdf.xacro" />
     
     <!-- Properties (Constants) -->
     <property name="M_PI" value="3.14159"/>
     
-    <property name="base_size_x" value="0.380" />
-    <property name="base_size_y" value="0.3" />
-    <property name="base_size_z" value="0.085" />
-    <property name="base_mass" value="25.0" />
+    <property name="base_size_x" value="0.70" />
+    <property name="base_size_y" value="0.25" />
+    <property name="base_size_z" value="0.05" />
+    <property name="base_mass" value="17.92" /> <!-- GvrBot with 4 batteries weighs 39.5 lbs or 17.917 kgs -->
     
     <property name="wheel_radius_big" value="0.085" />
     <property name="wheel_size_y" value="0.0825" />
     <property name="wheel_mass" value="0.1" />
 
-    <property name="wheel_offset_z_from_base_link" value="-${wheel_radius_big}" />
+    <!-- <property name="wheel_offset_z_from_base_link" value="-${wheel_radius_big/2}" /> -->
+    <property name="wheel_offset_z_from_base_link" value="0" />
     
     <macro name="gvr_base_macro">
-        <!-- Links and Joints (i.e., the robot) -->
-        <link name="base_footprint"/>
-        <joint name="bf_to_bl" type="fixed">
-          <origin xyz="0.0 0.0 -${base_size_z * 2}" rpy="0.0 0.0 0.0" />
-          <!--<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />-->
-          <parent link="base_link"/>
-          <child link="base_footprint"/>
-        </joint>
 
         <link name="base_link">
             <inertial>
                 <mass value="${base_mass}" />
-                <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
-                <rectangular_prism_tensor mass="${base_mass}" len_x="${base_size_x}" len_y="${base_size_y}" len_z="${base_size_z}" />
+                <origin xyz="0.0 0.0 0.0" rpy="0 0 1.57" />
+                <rectangular_prism_tensor mass="${base_mass}" len_x="${base_size_x+0.10}" len_y="${base_size_y+0.14}" len_z="${base_size_z}" />
             </inertial>
 
-            <!-- compare the two visual pieces until they match up in size then delete the mesh -->
             <visual>
-                <origin xyz="${base_size_x - 0.05} 0.0 -${base_size_z * 2}" rpy="0 0 1.57" />
+                <origin xyz="0.0 0.0 0.0" rpy="0 0 1.57" />
                 <geometry>
-                    <mesh filename="package://gvrbot_simulation/models/meshes/base_linkV2.dae"/>
+                    <mesh filename="package://gvrbot_simulation/models/meshes/base_linkV3.dae"/>
                 </geometry>
             </visual>
-            <!--visual>
-                <origin xyz="0.0 0.0 -0.085" rpy="0 0 0" />
-                <geometry>
-                    <box size="${base_size_x} ${base_size_y} ${base_size_z}" />
-                </geometry>
-                <Green />
-            </visual-->
 
             <collision>
-                <origin xyz="0.0 0.0 -0.085" rpy="0 0 0" />
+                <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
                 <geometry>
-                    <box size="${base_size_x} ${base_size_y} ${base_size_z}" />
+                    <box size="${base_size_x} ${base_size_y} ${base_size_z}"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="bl_to_bm" type="fixed">
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+          <parent link="base_link"/>
+          <child link="base_mark"/>
+        </joint>
+
+        <link name="base_mark">
+            <inertial>
+                <mass value="0.04" />
+                <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+                <rectangular_prism_tensor mass="${base_mass}" len_x="0.02" len_y="0.02" len_z="0.02" />
+            </inertial>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+                <geometry>
+                    <sphere radius="0.02"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0 0 0.0" />
+                 <geometry>
+                    <sphere radius="0.02"/>
                 </geometry>
             </collision>
         </link>
@@ -78,6 +87,7 @@
         <tracked_wheel parent="base_link" prefix="right_4" offset_x=" 0.10550" offset_y="-${base_size_y / 2}" offset_z="${wheel_offset_z_from_base_link}      " reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
         <tracked_wheel parent="base_link" prefix="right_5" offset_x=" 0.00500" offset_y="-${base_size_y / 2}" offset_z="${wheel_offset_z_from_base_link+0.005}" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
         
+       
         <gazebo>
         
         <!-- TODO: make custom plugin for this that doesn't require an imu -->
@@ -97,7 +107,7 @@
                 <publishOdometryMsg>1</publishOdometryMsg>
                 <odometryTopic>/gvr_bot/odom</odometryTopic>
         </plugin>
-        
+     <!--  
         <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
           <alwaysOn>true</alwaysOn>
           <updateRate>50.0</updateRate>
@@ -121,7 +131,7 @@
           <headingDrift>0.0</headingDrift>
           <headingGaussianNoise>0.05</headingGaussianNoise>
         </plugin>
-            
+            -->
         </gazebo>
         
     </macro>

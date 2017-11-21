@@ -6,7 +6,6 @@
   xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
   xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
 
- <xacro:include filename="$(find gvrbot_simulation)/models/robots/basic_colors.urdf.xacro" />
  <xacro:include filename="$(find gvrbot_simulation)/models/robots/inertial_tensors.urdf.xacro" />
 
   <!-- Properties (Constants) -->
@@ -43,7 +42,6 @@
           <geometry>
             <cylinder radius="${radius}" length="${height}" />
           </geometry>
-          <Yellow />
         </visual-->
       </link>
       
