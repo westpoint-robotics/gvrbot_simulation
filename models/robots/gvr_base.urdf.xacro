@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<robot name="gvr_bot"
+<robot 
     xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro"
     xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
     xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
@@ -10,18 +10,16 @@
     <xacro:include filename="$(find gvrbot_simulation)/models/robots/single_wheel.urdf.xacro" />
     
     <!-- Properties (Constants) -->
-    <property name="M_PI" value="3.14159"/>
-    
-    <property name="base_size_x" value="0.70" />
-    <property name="base_size_y" value="0.25" />
-    <property name="base_size_z" value="0.05" />
-    <property name="base_mass" value="17.92" /> <!-- GvrBot with 4 batteries weighs 39.5 lbs or 17.917 kgs -->
-    
+    <property name="M_PI" value="3.14159"/>    
+    <property name="base_size_x" value="0.41" /> <!-- Based measured outer dimensions of robot -->
+    <property name="base_size_y" value="0.68" /> <!-- Based measured outer dimensions of robot -->
+    <property name="base_size_z" value="0.16" /> <!-- Based measured outer dimensions of robot -->
+    <property name="base_mass" value="16.92" /> <!-- GvrBot with 4 batteries weighs 39.5 lbs or 17.917 kgs minus 1kg for wheels-->    
     <property name="wheel_radius_big" value="0.085" />
     <property name="wheel_size_y" value="0.0825" />
     <property name="wheel_mass" value="0.1" />
 
-    <!-- <property name="wheel_offset_z_from_base_link" value="-${wheel_radius_big/2}" /> -->
+    <property name="wheel_offset_z_from_base_link" value="-${wheel_radius_big}" />
     <property name="wheel_offset_z_from_base_link" value="0" />
     
     <macro name="gvr_base_macro">
@@ -29,21 +27,22 @@
         <link name="base_link">
             <inertial>
                 <mass value="${base_mass}" />
-                <origin xyz="0.0 0.0 0.0" rpy="0 0 1.57" />
-                <rectangular_prism_tensor mass="${base_mass}" len_x="${base_size_x+0.10}" len_y="${base_size_y+0.14}" len_z="${base_size_z}" />
-            </inertial>
+                <origin xyz="0.0 -0.1 0.0" rpy="0 0 0" /> <!-- Center of mass on y axis is 10cm in front of the origin 
+                <rectangular_prism_tensor mass="${base_mass}" len_x="${base_size_x}" len_y="${base_size_y}" len_z="${base_size_z}" /> -->
+<cuboid_tensor mass="${base_mass}" len_x="${base_size_x}" len_y="${base_size_y}" len_z="${base_size_z}" />
+           </inertial>
 
             <visual>
-                <origin xyz="0.0 0.0 0.0" rpy="0 0 1.57" />
+                <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
                 <geometry>
-                    <mesh filename="package://gvrbot_simulation/models/meshes/base_linkV3.dae"/>
+                    <mesh filename="package://gvrbot_simulation/models/meshes/base_linkV4.dae"/>
                 </geometry>
             </visual>
-
+            <!--   -->
             <collision>
                 <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
                 <geometry>
-                    <box size="${base_size_x} ${base_size_y} ${base_size_z}"/>
+                    <mesh filename="package://gvrbot_simulation/models/meshes/base_linkV4.dae"/>
                 </geometry>
             </collision>
         </link>
@@ -54,26 +53,28 @@
           <child link="base_mark"/>
         </joint>
 
-        <link name="base_mark">
+        <!-- bse_mark is 2cm cube marking the origin of the model and baselink, for use as a reference point -->
+        <link name="base_mark"> 
             <inertial>
-                <mass value="0.04" />
+                <mass value="0.01" />
                 <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
                 <rectangular_prism_tensor mass="${base_mass}" len_x="0.02" len_y="0.02" len_z="0.02" />
             </inertial>
             <visual>
                 <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
                 <geometry>
-                    <sphere radius="0.02"/>
+                    <box size="0.02 0.02 0.02"/>
                 </geometry>
             </visual>
             <collision>
                 <origin xyz="0.0 0.0 0.0" rpy="0 0 0.0" />
                  <geometry>
-                    <sphere radius="0.02"/>
+                    <box size="0.02 0.02 0.02"/>
                 </geometry>
             </collision>
         </link>
-        
+
+        <!-- 
         <tracked_wheel parent="base_link" prefix="left_0"  offset_x=" 0.25100" offset_y=" ${base_size_y / 2}" offset_z="${wheel_offset_z_from_base_link}      " reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
         <tracked_wheel parent="base_link" prefix="left_1"  offset_x=" 0.00000" offset_y=" ${base_size_y / 2}" offset_z="${wheel_offset_z_from_base_link-0.005}" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
         <tracked_wheel parent="base_link" prefix="left_2"  offset_x="-0.25100" offset_y=" ${base_size_y / 2}" offset_z="${wheel_offset_z_from_base_link}      " reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
@@ -86,11 +87,10 @@
         <tracked_wheel parent="base_link" prefix="right_3" offset_x="-0.10550" offset_y="-${base_size_y / 2}" offset_z="${wheel_offset_z_from_base_link}      " reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
         <tracked_wheel parent="base_link" prefix="right_4" offset_x=" 0.10550" offset_y="-${base_size_y / 2}" offset_z="${wheel_offset_z_from_base_link}      " reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
         <tracked_wheel parent="base_link" prefix="right_5" offset_x=" 0.00500" offset_y="-${base_size_y / 2}" offset_z="${wheel_offset_z_from_base_link+0.005}" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        
-       
+        -->
         <gazebo>
         
-        <!-- TODO: make custom plugin for this that doesn't require an imu -->
+        <!-- TODO: make custom plugin for this that doesn't require an imu 
         <plugin name="diffdrive_plugin_multiwheel" filename="libdiffdrive_plugin_multi_wheel.so">                
                 <alwaysOn>true</alwaysOn>
                 <updateRate>50.0</updateRate>
@@ -106,8 +106,8 @@
                 <publishOdometryTf>1</publishOdometryTf>
                 <publishOdometryMsg>1</publishOdometryMsg>
                 <odometryTopic>/gvr_bot/odom</odometryTopic>
-        </plugin>
-     <!--  
+        </plugin> -->
+        <!--
         <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
           <alwaysOn>true</alwaysOn>
           <updateRate>50.0</updateRate>
