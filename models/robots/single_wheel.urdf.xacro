@@ -17,7 +17,7 @@
       <origin xyz="${offset_x} ${offset_y * reflect} ${offset_z}" rpy="0 0 0" />
       <parent link="${parent}" />
       <child link="${prefix}_wheel_link" />
-      <axis xyz="0 1 0" />
+      <axis xyz="1 0 0" />
       <limit effort="100" velocity="100" />
       <joint_properties damping="0.0" friction="0.0" />
       <anchor xyz="0 0 0" />
@@ -26,23 +26,23 @@
     <link name="${prefix}_wheel_link">
         <inertial>
           <mass value="${mass}" />
-          <origin xyz=" 0 0 0 " />
+          <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" /> <!-- Rotate and the cyclinder to use as a wheel -->
           <cylinder_tensor mass="${mass}" radius="${radius}" height="${height}" />
         </inertial>
 
         <collision>
-          <origin xyz="0 0 0" rpy="${-M_PI/2} 0 0" />
+          <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" /> <!-- Rotate the cyclinder to use as a wheel -->
           <geometry>
             <cylinder radius="${radius}" length="${height}" />
           </geometry>
         </collision>
-
-        <!--visual>
-          <origin xyz="0 0 0" rpy="${-M_PI/2} 0 0" />
+<!--
+        <visual>
+          <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" /> 
           <geometry>
             <cylinder radius="${radius}" length="${height}" />
           </geometry>
-        </visual-->
+        </visual>  -->
       </link>
       
       <gazebo reference="${prefix}_wheel_link" >

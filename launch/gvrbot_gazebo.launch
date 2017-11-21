@@ -13,7 +13,7 @@
 	<param name= "robot_description" command="$(find xacro)/xacro.py '$(find gvrbot_simulation)/models/robots/gvr_bot.urdf.xacro'"/>
 
     <!-- Spawn a robot into Gazebo -->
-    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model gvr01 -z 1.5" />
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model gvr01 -z 0.15" />
 
 
 	<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher">
