@@ -72,27 +72,23 @@
         <tracked_wheel parent="base_link" prefix="left_0"  offset_y=" 0.25100" offset_x=" ${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
         <tracked_wheel parent="base_link" prefix="left_1"  offset_y=" 0.00000" offset_x=" ${base_size_x / 2 - 0.04}" offset_z="-0.001" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
         <tracked_wheel parent="base_link" prefix="left_2"  offset_y="-0.25100" offset_x=" ${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="left_3"  offset_y=" 0.10550" offset_x=" ${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="left_4"  offset_y="-0.10550" offset_x=" ${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="left_5"  offset_y=" 0.00500" offset_x=" ${base_size_x / 2 - 0.04}" offset_z="0.001" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
 
         <tracked_wheel parent="base_link" prefix="right_0" offset_y=" 0.25100" offset_x="-${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
         <tracked_wheel parent="base_link" prefix="right_1" offset_y=" 0.00000" offset_x="-${base_size_x / 2 - 0.04}" offset_z="-0.001" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
         <tracked_wheel parent="base_link" prefix="right_2" offset_y="-0.25100" offset_x="-${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="right_3" offset_y="-0.10550" offset_x="-${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="right_4" offset_y=" 0.10550" offset_x="-${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="right_5" offset_y=" 0.00500" offset_x="-${base_size_x / 2 - 0.04}" offset_z="0.001" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
       <!--  -->
+      
+     
         <gazebo>
-        
+
         <plugin name="diffdrive_plugin_multiwheel" filename="libdiffdrive_plugin_multi_wheel.so">                
                 <alwaysOn>true</alwaysOn>
-                <updateRate>50.0</updateRate>
-                <leftJoints>left_0_wheel_joint left_1_wheel_joint left_2_wheel_joint left_3_wheel_joint left_4_wheel_joint left_5_wheel_joint</leftJoints>
-                <rightJoints>right_0_wheel_joint right_1_wheel_joint right_2_wheel_joint right_3_wheel_joint right_4_wheel_joint right_5_wheel_joint</rightJoints>
+                <updateRate>10.0</updateRate>
+                <leftJoints>left_0_wheel_joint left_5_wheel_joint</leftJoints>
+                <rightJoints>right_0_wheel_joint right_5_wheel_joint</rightJoints>
                 <wheelSeparation>${base_size_y}</wheelSeparation>
                 <wheelDiameter>${wheel_radius_big*2}</wheelDiameter>
-                <torque>50000</torque>
+                <torque>500000</torque>
                 <interface:position name="position_iface_2"/>
                 <robotNamespace>/</robotNamespace>
                 <robotBaseFrame>base_link</robotBaseFrame>
@@ -101,7 +97,7 @@
                 <publishOdometryMsg>1</publishOdometryMsg>
                 <odometryTopic>/gvr_bot/odom</odometryTopic>
         </plugin> 
-        
+
         <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
           <alwaysOn>true</alwaysOn>
           <updateRate>50.0</updateRate>
@@ -125,8 +121,9 @@
           <headingDrift>0.0</headingDrift>
           <headingGaussianNoise>0.05</headingGaussianNoise>
         </plugin>
-         <!--    -->
-        </gazebo>
+
+        </gazebo> 
+        
         
     </xacro:macro>
 </robot>
