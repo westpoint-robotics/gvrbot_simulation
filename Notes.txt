@@ -1,0 +1,3 @@
+Community working on tracked vehicle for GazeboSim at this link. Actively working in Dec 2018.
+
+https://bitbucket.org/osrf/gazebo/pull-requests/2652/added-support-for-tracked-vehicles/diff

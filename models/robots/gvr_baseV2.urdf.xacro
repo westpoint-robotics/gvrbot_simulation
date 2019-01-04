@@ -5,12 +5,13 @@
     xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
     
     <xacro:include filename="$(find gvrbot_simulation)/models/robots/inertial_tensors.urdf.xacro" />
-    <xacro:include filename="$(find gvrbot_simulation)/models/robots/single_wheel.urdf.xacro" />
+
+    <xacro:include filename="$(find gvrbot_simulation)/models/robots/tracked_wheel.urdf.xacro" />
     
     <!-- Properties (Constants) -->
     <xacro:property name="M_PI" value="3.14159"/>    
-    <xacro:property name="base_size_x" value="0.41" /> <!-- Based measured outer dimensions of robot -->
-    <xacro:property name="base_size_y" value="0.68" /> <!-- Based measured outer dimensions of robot -->
+    <xacro:property name="base_size_y" value="0.41" /> <!-- Based measured outer dimensions of robot -->
+    <xacro:property name="base_size_x" value="0.68" /> <!-- Based measured outer dimensions of robot -->
     <xacro:property name="base_size_z" value="0.16" /> <!-- Based measured outer dimensions of robot -->
     <xacro:property name="base_mass" value="16.92" /> <!-- GvrBot with 4 batteries weighs 39.5 lbs or 17.917 kgs minus 1kg for wheels-->    
     <xacro:property name="wheel_radius_big" value="0.085" />
@@ -66,28 +67,27 @@
             </collision>
         </link>
 
-         
-        <tracked_wheel parent="base_link" prefix="left_0"  offset_y=" 0.25100" offset_x=" ${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="left_1"  offset_y=" 0.00000" offset_x=" ${base_size_x / 2 - 0.04}" offset_z="-0.001" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="left_2"  offset_y="-0.25100" offset_x=" ${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="left_3"  offset_y=" 0.10550" offset_x=" ${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="left_4"  offset_y="-0.10550" offset_x=" ${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="left_5"  offset_y=" 0.00500" offset_x=" ${base_size_x / 2 - 0.04}" offset_z="0.001" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
+  
+        <tracked_wheel parent="base_link" prefix="left_0" offset_y=" ${base_size_y / 2 - 0.04}" offset_x=" 0.25100" offset_z="0" reflect="1" wheel_radius="${wheel_radius_big}" wheel_size_y="${wheel_size_y}" mass="${wheel_mass}"/>  
+         <!--<tracked_wheel parent="base_link" prefix="left_1" offset_y=" ${base_size_y / 2 - 0.04}" offset_x=" 0.10550" offset_z="0" reflect="1" wheel_radius="${wheel_radius_big}" wheel_size_y="${wheel_size_y}" mass="${wheel_mass}"/>  -->
+        <tracked_wheel parent="base_link" prefix="left_2" offset_y=" ${base_size_y / 2 - 0.04}" offset_x=" 0.00000" offset_z="-0.001" reflect="1" wheel_radius="${wheel_radius_big}" wheel_size_y="${wheel_size_y}" mass="${wheel_mass}"/>  
+        <!--<tracked_wheel parent="base_link" prefix="left_3" offset_y=" ${base_size_y / 2 - 0.04}" offset_x="-0.10550" offset_z="0" reflect="1" wheel_radius="${wheel_radius_big}" wheel_size_y="${wheel_size_y}" mass="${wheel_mass}"/>    -->
+        <tracked_wheel parent="base_link" prefix="left_4" offset_y=" ${base_size_y / 2 - 0.04}" offset_x="-0.25100" offset_z="0" reflect="1" wheel_radius="${wheel_radius_big}" wheel_size_y="${wheel_size_y}" mass="${wheel_mass}"/>
+        <tracked_wheel parent="base_link" prefix="right_0" offset_y="-${base_size_y / 2 - 0.04}" offset_x=" 0.25100" offset_z="0" reflect="1" wheel_radius="${wheel_radius_big}" wheel_size_y="${wheel_size_y}" mass="${wheel_mass}"/>  
+        <!-- <tracked_wheel parent="base_link" prefix="right_1" offset_y="-${base_size_y / 2 - 0.04}" offset_x=" 0.10550" offset_z="0" reflect="1" wheel_radius="${wheel_radius_big}" wheel_size_y="${wheel_size_y}" mass="${wheel_mass}"/>   --> 
+        <tracked_wheel parent="base_link" prefix="right_2" offset_y="-${base_size_y / 2 - 0.04}" offset_x=" 0.00000" offset_z="-0.001" reflect="1" wheel_radius="${wheel_radius_big}" wheel_size_y="${wheel_size_y}" mass="${wheel_mass}"/>  
+        <!-- <tracked_wheel parent="base_link" prefix="right_3" offset_y="-${base_size_y / 2 - 0.04}" offset_x="-0.10550" offset_z="0" reflect="1" wheel_radius="${wheel_radius_big}" wheel_size_y="${wheel_size_y}" mass="${wheel_mass}"/>    -->
+        <tracked_wheel parent="base_link" prefix="right_4" offset_y="-${base_size_y / 2 - 0.04}" offset_x="-0.25100" offset_z="0" reflect="1" wheel_radius="${wheel_radius_big}" wheel_size_y="${wheel_size_y}" mass="${wheel_mass}"/>        
 
-        <tracked_wheel parent="base_link" prefix="right_0" offset_y=" 0.25100" offset_x="-${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="right_1" offset_y=" 0.00000" offset_x="-${base_size_x / 2 - 0.04}" offset_z="-0.001" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="right_2" offset_y="-0.25100" offset_x="-${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="right_3" offset_y="-0.10550" offset_x="-${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="right_4" offset_y=" 0.10550" offset_x="-${base_size_x / 2 - 0.04}" offset_z="0" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-        <tracked_wheel parent="base_link" prefix="right_5" offset_y=" 0.00500" offset_x="-${base_size_x / 2 - 0.04}" offset_z="0.001" reflect="1" radius="${wheel_radius_big}" height="${wheel_size_y}" mass="${wheel_mass}"/>
-      <!--  -->
         <gazebo>
-        
+          
         <plugin name="diffdrive_plugin_multiwheel" filename="libdiffdrive_plugin_multi_wheel.so">                
                 <alwaysOn>true</alwaysOn>
-                <updateRate>50.0</updateRate>
-                <leftJoints>left_0_wheel_joint left_1_wheel_joint left_2_wheel_joint left_3_wheel_joint left_4_wheel_joint left_5_wheel_joint</leftJoints>
-                <rightJoints>right_0_wheel_joint right_1_wheel_joint right_2_wheel_joint right_3_wheel_joint right_4_wheel_joint right_5_wheel_joint</rightJoints>
+                <updateRate>10.0</updateRate>
+                <leftJoints>left_0_wheel_joint left_2_wheel_joint left_4_wheel_joint </leftJoints>
+                <rightJoints>right_0_wheel_joint right_2_wheel_joint right_4_wheel_joint </rightJoints>
+                <!-- <leftJoints>left_0_wheel_joint left_1_wheel_joint left_2_wheel_joint left_3_wheel_joint left_4_wheel_joint left_5_wheel_joint</leftJoints>
+                <rightJoints>right_0_wheel_joint right_1_wheel_joint right_2_wheel_joint right_3_wheel_joint right_4_wheel_joint right_5_wheel_joint</rightJoints> -->
                 <wheelSeparation>${base_size_y}</wheelSeparation>
                 <wheelDiameter>${wheel_radius_big*2}</wheelDiameter>
                 <torque>50000</torque>
@@ -95,7 +95,7 @@
                 <robotNamespace>/</robotNamespace>
                 <robotBaseFrame>base_link</robotBaseFrame>
                 <commandTopic>/gvr_bot/cmd_vel</commandTopic>
-                <publishOdometryTf>1</publishOdometryTf>
+                <publishOdometryTf>0</publishOdometryTf>
                 <publishOdometryMsg>1</publishOdometryMsg>
                 <odometryTopic>/gvr_bot/odom</odometryTopic>
         </plugin> 
@@ -123,7 +123,7 @@
           <headingDrift>0.0</headingDrift>
           <headingGaussianNoise>0.05</headingGaussianNoise>
         </plugin>
-         <!--    -->
+        <!--   -->
         </gazebo>
         
     </xacro:macro>

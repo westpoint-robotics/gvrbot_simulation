@@ -10,10 +10,10 @@
     </include>
 
     <!-- Convert an xacro and put on parameter server  -->
-	<param name= "robot_description" command="$(find xacro)/xacro  --inorder '$(find gvrbot_simulation)/models/robots/gvr_bot.urdf.xacro'"/>
+	<param name= "robot_description" command="$(find xacro)/xacro --inorder '$(find gvrbot_simulation)/models/robots/gvr_bot.urdf.xacro'"/>
 
     <!-- Spawn a robot into Gazebo -->
-    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model gvr01 -z 0.15" />
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-z 0.3 -x 0 -param robot_description -urdf -model gvr01" />
 
 
 	<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher">
@@ -23,13 +23,19 @@
 
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 	
+	
+    <include file="$(find gvrbot_simulation)/launch/xbox360_teleop.launch"/>
+	
+	
+	
+ <!--	
     <node pkg="joy" type="joy_node" name="joy_node" />
 
     <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy">
       <remap from="cmd_vel" to="/gvr_bot/cmd_vel" />
     </node>
 
-    <!--
+   
 <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find gvrbot_simulation)/launch/gvrbot.rviz"/>
 -->
 
