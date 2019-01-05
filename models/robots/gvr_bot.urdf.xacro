@@ -3,7 +3,7 @@
 <robot name="gvr_bot"
     xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
 
-    <xacro:include filename="$(find gvrbot_simulation)/models/robots/gvr_baseV2.urdf.xacro" />
+    <xacro:include filename="$(find gvrbot_simulation)/models/robots/gvr_base.urdf.xacro" />
 
     <gvr_base_macro />
 </robot>

@@ -15,7 +15,6 @@
     <!-- Spawn a robot into Gazebo -->
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-z 0.3 -x 0 -param robot_description -urdf -model gvr01" />
 
-
 	<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher">
 		<param name="publish_frequency" type="double" value="30.0" />
 		<param name="tf_prefix" type="string" value=""/>
@@ -23,10 +22,7 @@
 
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 	
-	
     <include file="$(find gvrbot_simulation)/launch/xbox360_teleop.launch"/>
-	
-	
 	
  <!--	
     <node pkg="joy" type="joy_node" name="joy_node" />
